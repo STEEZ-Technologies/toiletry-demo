@@ -733,36 +733,36 @@ model-viewer { width:100%; height:100%; background:var(--soft-black); --poster-c
   <div class="sd-divider"></div>
 
   <!-- Navigation items -->
-  <button class="sd-item sd-active" onclick="scrollToSection('hero')" data-tip="Home">
+  <button class="sd-item sd-active" onclick="scrollToSection('hero')" data-tip="Home" data-tip-en="Home" data-tip-zh="首页">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
   </button>
-  <button class="sd-item" onclick="scrollToSection('products')" data-tip="Products">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="9" height="9" rx="2"/><rect x="13" y="2" width="9" height="9" rx="2"/><rect x="2" y="13" width="9" height="9" rx="2"/><rect x="13" y="13" width="9" height="9" rx="2"/></svg>
-  </button>
-  <button class="sd-item" onclick="scrollToSection('features')" data-tip="Technology">
+  <button class="sd-item" onclick="scrollToSection('features')" data-tip="Technology" data-tip-en="Technology" data-tip-zh="技术">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
   </button>
-  <button class="sd-item" onclick="scrollToSection('comparison')" data-tip="Compare">
+  <button class="sd-item" onclick="scrollToSection('products')" data-tip="Products" data-tip-en="Products" data-tip-zh="产品">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="9" height="9" rx="2"/><rect x="13" y="2" width="9" height="9" rx="2"/><rect x="2" y="13" width="9" height="9" rx="2"/><rect x="13" y="13" width="9" height="9" rx="2"/></svg>
+  </button>
+  <button class="sd-item" onclick="scrollToSection('comparison')" data-tip="Compare" data-tip-en="Compare" data-tip-zh="比较">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
   </button>
-  <button class="sd-item" onclick="scrollToSection('factory')" data-tip="Manufacturing">
+  <button class="sd-item" onclick="scrollToSection('factory')" data-tip="Manufacturing" data-tip-en="Manufacturing" data-tip-zh="制造">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 20V9l7-5 5 4 7-5v17H2z"/><path d="M9 20v-5h6v5"/></svg>
   </button>
 
   <div class="sd-divider"></div>
 
   <!-- Language switcher -->
-  <button class="sd-item sd-lang" id="sdLangEN" onclick="setLang('en')" data-tip="English">
+  <button class="sd-item sd-lang" id="sdLangEN" onclick="setLang('en')" data-tip="English" data-tip-en="English" data-tip-zh="英文">
     <span style="font-size:10px;font-weight:600;letter-spacing:0.06em;font-family:var(--sans)">EN</span>
   </button>
-  <button class="sd-item sd-lang" id="sdLangCN" onclick="setLang('zh')" data-tip="中文">
+  <button class="sd-item sd-lang" id="sdLangCN" onclick="setLang('zh')" data-tip="中文" data-tip-en="Chinese" data-tip-zh="中文">
     <span style="font-size:10px;font-weight:600;letter-spacing:0.06em;font-family:var(--sans)">中</span>
   </button>
 
   <div class="sd-divider"></div>
 
   <!-- Contact CTA -->
-  <button class="sd-item sd-contact" onclick="scrollToSection('contact')" data-tip="Contact Us">
+  <button class="sd-item sd-contact" onclick="scrollToSection('contact')" data-tip="Contact Us" data-tip-en="Contact Us" data-tip-zh="联系我们">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
   </button>
 
@@ -1960,11 +1960,14 @@ document.addEventListener('DOMContentLoaded', applyBrand);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Sync language buttons with current lang state
+  // Sync language buttons and tooltips with current lang state
   function syncLangBtns() {
     const lang = document.documentElement.lang || 'en';
     document.getElementById('sdLangEN')?.classList.toggle('sd-active', lang === 'en');
     document.getElementById('sdLangCN')?.classList.toggle('sd-active', lang === 'zh');
+    dock.querySelectorAll('[data-tip-en]').forEach(el => {
+      el.dataset.tip = lang === 'zh' ? el.dataset.tipZh : el.dataset.tipEn;
+    });
   }
   syncLangBtns();
 
